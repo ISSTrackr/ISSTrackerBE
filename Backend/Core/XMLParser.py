@@ -437,6 +437,7 @@ def parseRequestParamsXMLToDic(xml):
         parser = etree.XMLParser(dtd_validation=True, encoding="utf-8")
         etree.fromstring(xml, parser)
     except etree.XMLSyntaxError:
+
         return "INVALID XML"
 
     xml = xml.decode(encoding="utf-8")
