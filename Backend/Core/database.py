@@ -1,4 +1,5 @@
 import redis
+from os import getenv
 from datetime import datetime
 from Backend.Core.dataStructs import parseTimeToTimestamp, ISSDBKey, Astronaut
 from Backend.Requests import astrosOnISS
@@ -7,8 +8,9 @@ from Backend.Tools import rssFeedTimeConverter as dateConverter
 
 class redisDB:
     # establishing connection to redisDB
-    __redisHost__ = "localhost"
-    __redisDB__ = redis.StrictRedis(host=__redisHost__, port=6379, db=0, decode_responses=True)
+    __redisHost__ = getenv('REDISHOST')  # "ISS-Trackr-API.redis.cache.windows.net"
+    __redisPW__ = getenv('REDISPW')
+    __redisDB__ = redis.StrictRedis(host=__redisHost__, port=6379, db=0, decode_responses=True, password=__redisPW__)
 
     # push current ISS postition to DB
     def _setIsspos(self, data):

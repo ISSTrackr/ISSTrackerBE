@@ -4,8 +4,8 @@ import redis
 
 
 def process(data):
-    __redisHost__ = "localhost"
-    __redisDB__ = redis.Redis(host=__redisHost__, port=6379, db=0)
+    __redisHost__ = ""
+    __redisDB__ = redis.Redis(host=__redisHost__, port=6379, db=0, password="")
     astros = data['astros']
     for i in range(len(astros)):
         __redisDB__.set(name="Astronaut:" + astros[i]['name'] + ":picture", value=astros[i]['picture'])

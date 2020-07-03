@@ -1,15 +1,16 @@
 import json
 from time import sleep
-
+from os import getenv
 import redis
 
-__redisHost__ = "localhost"
-__redisDB__ = redis.Redis(host=__redisHost__, port=6379, db=0)
+__redisHost__ = getenv('REDISHOST') #"ISS-Trackr-API.redis.cache.windows.net"
+__redisPW__ = getenv('REDISPW')
+__redisDB__ = redis.Redis(host=__redisHost__, port=6379, db=0, password=__redisPW__)
 
 
 # enter path of your json File for "path"
 def getPath():
-    path = r"/mnt/c/users/lkno0/Documents/ISSTracker/Frontend/json/word_low_res.json"
+    path = r"/mnt/c/users/lkno0/Documents/ISSTrackerBE/custom.geo_lowres.json"
     return path
 
 
