@@ -1,0 +1,6 @@
+redis
+feedparser
+lxml
+requests
+ssl
+pytz
