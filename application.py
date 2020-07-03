@@ -9,6 +9,8 @@ from Backend.Requests.issPastPasses import pastPasses
 from Backend.Requests.issFuturePasses import getFuturePass
 from Backend.Core.XMLParser import reformatData, parseRequestParamsXMLToDic
 from Backend.Requests.addressGeocoding import geocoder
+import multiprocessing
+from Backend.Core.polling import polling
 
 app = Flask(__name__, static_url_path='')
 BadRequest = '<?xml version="1.0" encoding="UTF-8"?>' \
@@ -16,6 +18,8 @@ BadRequest = '<?xml version="1.0" encoding="UTF-8"?>' \
                    '<error>Error 400: Bad Request</error>' \
                    '<description></description>' \
                    '</message>'
+
+multiprocessing.Process(target=polling).start()
 
 
 def makeResponse(data, status):
