@@ -16,10 +16,10 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__, static_url_path='')
 cors = CORS(app)
 BadRequest = '<?xml version="1.0" encoding="UTF-8"?>' \
-                   '<message>' \
-                   '<error>Error 400: Bad Request</error>' \
-                   '<description></description>' \
-                   '</message>'
+             '<message>' \
+             '<error>Error 400: Bad Request</error>' \
+             '<description></description>' \
+             '</message>'
 
 multiprocessing.Process(target=polling).start()
 
@@ -37,6 +37,7 @@ def _checkData(requestName, data):
         ],
         "ISSpos": True,
         "AstrosOnISS": True,
+        "CountryList": True,
         "GeoJson": [
             "country"
         ],
@@ -84,12 +85,18 @@ def _checkData(requestName, data):
 @app.route('/<requestName>', methods=['GET', 'POST'])
 @cross_origin()  # Adds 'Access-Control-Allow-Origin': '*' to answer
 def request(requestName):
-
     if frequest.method == 'GET':
         if requestName == 'AstrosOnISS':
-            return makeResponse(data=reformatData(requestData=redisDB().getData(None, requestName), requestName=requestName), status=200)
+            return makeResponse(
+                data=reformatData(requestData=redisDB().getData(None, requestName), requestName=requestName),
+                status=200)
         elif requestName == 'ISSpos':
-            return makeResponse(data=reformatData(requestData=issCurrentPosition(), requestName=requestName), status=200)
+            return makeResponse(data=reformatData(requestData=issCurrentPosition(), requestName=requestName),
+                                status=200)
+        elif requestName == "CountryList":
+            return makeResponse(
+                data=reformatData(requestData=redisDB().getData(None, requestName), requestName=requestName),
+                status=200)
         else:
             return makeResponse(BadRequest, 400)
 
@@ -103,20 +110,31 @@ def request(requestName):
             return makeResponse(BadRequest, 400)
         else:
             if requestName == "ISSCountryPasses":
-                return makeResponse(data=reformatData(requestData=ISScountryPasses(requestData=body), requestName=requestName), status=200)
+                return makeResponse(
+                    data=reformatData(requestData=ISScountryPasses(requestData=body), requestName=requestName),
+                    status=200)
             elif requestName == "ISSDB":
-                return makeResponse(data=reformatData(requestData=redisDB().getData(body, requestName), requestName=requestName), status=200)
+                return makeResponse(
+                    data=reformatData(requestData=redisDB().getData(body, requestName), requestName=requestName),
+                    status=200)
             elif requestName == "GeoJson":
-                return makeResponse(data=reformatData(requestData=redisDB().getData(body, requestName), requestName=requestName), status=200)
+                return makeResponse(
+                    data=reformatData(requestData=redisDB().getData(body, requestName), requestName=requestName),
+                    status=200)
             elif requestName == "RSS-Feed":
-                return makeResponse(data=reformatData(requestData=redisDB().getData(requestData=body, requestName=requestName), requestName=requestName), status=200)
+                return makeResponse(
+                    data=reformatData(requestData=redisDB().getData(requestData=body, requestName=requestName),
+                                      requestName=requestName), status=200)
             elif requestName == "ISSpastPasses":
-                return makeResponse(data=reformatData(requestData=pastPasses().pastPasses(requestData=body), requestName=requestName), status=200)
+                return makeResponse(
+                    data=reformatData(requestData=pastPasses().pastPasses(requestData=body), requestName=requestName),
+                    status=200)
             elif requestName == "ISSfuturePasses":
-                return makeResponse(data=reformatData(requestData=getFuturePass(params=body["params"]), requestName=requestName), status=200)
+                return makeResponse(
+                    data=reformatData(requestData=getFuturePass(params=body["params"]), requestName=requestName),
+                    status=200)
             elif requestName == "GeocodingAddress":
-                return makeResponse(data=reformatData(requestData=geocoder(params=body["params"]), requestName=requestName), status=200)
+                return makeResponse(
+                    data=reformatData(requestData=geocoder(params=body["params"]), requestName=requestName), status=200)
             else:
                 return makeResponse(BadRequest, 400)
-
-

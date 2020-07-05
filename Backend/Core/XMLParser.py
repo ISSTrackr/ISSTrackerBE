@@ -385,6 +385,20 @@ def _convertGeocodingToXML(requestData):
     return tostring(elem)
 
 
+def _convertCountryList(requestData):
+    elem = Element('Request')
+    requestChild = Element('requestName')
+    requestChild.text = 'CountryList'
+    elem.append(requestChild)
+    dataChild = Element('data')
+    for country in requestData:
+        countrychild = Element('country')
+        countrychild.text = str(country)
+        dataChild.append(countrychild)
+    elem.append(dataChild)
+    return tostring(elem)
+
+
 def reformatData(requestData, requestName):
     functions = {
         'ISSDB': _convertISSDBKeyToXML,
@@ -395,15 +409,15 @@ def reformatData(requestData, requestName):
         'GeoJson': _convertGeoJSONToXML,
         'AstrosOnISS': _convertAstrosToXML,
         "RSS-Feed": _convertRSSFeedToXML,
-        "GeocodingAddress": _convertGeocodingToXML
+        "GeocodingAddress": _convertGeocodingToXML,
+        "CountryList": _convertCountryList
         # List of Requests
     }
     # get xml
     xmlData = functions.get(requestName)(requestData)
     # add header and convert from bytestring to normal string
-    xmlData = "<?xml version='1.0' encoding='UTF-8'?>" + str(xmlData, 'utf-8')
+    xmlData = "<?xml version='1.0' encoding='UTF-8'?><!DOCTYPE Request SYSTEM \'./DTD/" + requestName + ".dtd\'>" + str(xmlData, 'utf-8')
     return xmlData
-
 
 '''
 Example

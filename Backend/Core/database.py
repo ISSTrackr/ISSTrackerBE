@@ -156,6 +156,20 @@ class redisDB:
         items = sorted(items, key=lambda i: (i['published']), reverse=True)
         return items
 
+
+    def getCountryList(self, requestData):
+        with self.__redisDB__ as DB:
+
+            # get all countrys from DB
+            keys = DB.keys("GeoJson:*")
+            countryset = set()
+            for i in range(len(keys)):
+                countryset.add(str(keys[i]).split(":")[1])
+
+            return countryset
+
+
+
     def setData(self, data, requestname):
         # switch case for requestnames -> call correct function for every request
         topLevel = {
@@ -170,7 +184,8 @@ class redisDB:
             "ISSDB": self._getISS,
             "GeoJson": self._getGeoJson,
             "AstrosOnISS": self._getAstros,
-            "RSS-Feed": self._getRssFeed
+            "RSS-Feed": self._getRssFeed,
+            "CountryList": self.getCountryList
         }
         return functions.get(requestName)(requestData)
 
