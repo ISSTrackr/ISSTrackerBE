@@ -34,7 +34,4 @@ def currPos():
         # Create a dictionary with the values latitude, longitude, timestamp and return data in dictionary
         iss_dict = {'latitude': float(latitude), 'longitude': float(longitude), 'timestamp': dt_obj}
 
-        # Push data to DB
-        redisDB().setData(data=iss_dict, requestname='ISSpos')
-
         return iss_dict
