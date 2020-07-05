@@ -391,10 +391,12 @@ def _convertCountryList(requestData):
     requestChild.text = 'CountryList'
     elem.append(requestChild)
     dataChild = Element('data')
+    countrylistchild = Element('CountryList')
     for country in requestData:
         countrychild = Element('country')
         countrychild.text = str(country)
-        dataChild.append(countrychild)
+        countrylistchild.append(countrychild)
+    dataChild.append(countrylistchild)
     elem.append(dataChild)
     return tostring(elem)
 
