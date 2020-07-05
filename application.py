@@ -82,7 +82,7 @@ def _checkData(requestName, data):
 
 
 @app.route('/<requestName>', methods=['GET', 'POST'])
-@cross_origin() # Adds 'Access-Control-Allow-Origin': '*' to answer
+@cross_origin()  # Adds 'Access-Control-Allow-Origin': '*' to answer
 def request(requestName):
 
     if frequest.method == 'GET':
