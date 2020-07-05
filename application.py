@@ -25,7 +25,7 @@ multiprocessing.Process(target=polling).start()
 
 
 def makeResponse(data, status):
-    return Response(data, status=status, content_type='text/xml')  # headers={'Access-Control-Allow-Origin': '*'}
+    return Response(data, status=status, content_type='text/xml')  # headers={}
 
 
 def _checkData(requestName, data):
@@ -82,7 +82,7 @@ def _checkData(requestName, data):
 
 
 @app.route('/<requestName>', methods=['GET', 'POST'])
-@cross_origin()
+@cross_origin() # Adds 'Access-Control-Allow-Origin': '*' to answer
 def request(requestName):
 
     if frequest.method == 'GET':
