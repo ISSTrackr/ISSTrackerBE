@@ -11,8 +11,10 @@ from Backend.Core.XMLParser import reformatData, parseRequestParamsXMLToDic
 from Backend.Requests.addressGeocoding import geocoder
 import multiprocessing
 from Backend.Core.polling import polling
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__, static_url_path='')
+cors = CORS(app)
 BadRequest = '<?xml version="1.0" encoding="UTF-8"?>' \
                    '<message>' \
                    '<error>Error 400: Bad Request</error>' \
@@ -80,6 +82,7 @@ def _checkData(requestName, data):
 
 
 @app.route('/<requestName>', methods=['GET', 'POST'])
+@cross_origin()
 def request(requestName):
 
     if frequest.method == 'GET':
