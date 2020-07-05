@@ -25,7 +25,7 @@ multiprocessing.Process(target=polling).start()
 
 
 def makeResponse(data, status):
-    return Response(data, status=status, content_type='text/xml', headers={'Access-Control-Allow-Origin': '*'})
+    return Response(data, status=status, content_type='text/xml')  # headers={'Access-Control-Allow-Origin': '*'}
 
 
 def _checkData(requestName, data):
