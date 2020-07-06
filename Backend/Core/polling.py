@@ -4,7 +4,6 @@ from Backend.Core.database import redisDB
 from datetime import datetime
 from time import sleep
 
-
 def polling():
     i = 0
     rssFeed()
@@ -14,6 +13,7 @@ def polling():
         redisDB().setData(data=iss_dict, requestname='ISSpos')
         i += 1
         sleep(5)
-        if i == 720:  # Execute RSS-Feed Poll only every hour
+        if i == 10:
             rssFeed()
             print("Executed RSS-Feed poll at: ", datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
+            i = 0
