@@ -13,7 +13,7 @@ def polling():
         redisDB().setData(data=iss_dict, requestname='ISSpos')
         i += 1
         sleep(5)
-        if i == 10:
+        if i == 500:
             rssFeed()
             print("Executed RSS-Feed poll at: ", datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
             i = 0
