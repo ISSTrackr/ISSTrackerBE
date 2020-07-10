@@ -113,6 +113,7 @@ def JsonToXMLForCounties(requestData):
     return tostring(elem)
 
 
+
 # #for generating xmlForCounties.xml. After generating xmlForCounties should be moved to ISSTrackerFE>static>xml
 # file = open(r"../../../ISSTrackerBE/custom.geo_lowres.json")
 # data = json.load(file)
@@ -121,3 +122,4 @@ def JsonToXMLForCounties(requestData):
 # newFile = open(r"xmlForCounties.xml", "w+")
 # newFile.write(xml)
 # file.close()
+
