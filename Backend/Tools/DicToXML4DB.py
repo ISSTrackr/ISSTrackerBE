@@ -2,7 +2,6 @@ import json
 from xml.etree.ElementTree import Element, ElementTree
 from xml.etree.ElementTree import tostring
 
-
 # preprocessing for parsing GeoJsons
 def processJson(data):
     countries = data['features']
@@ -66,10 +65,8 @@ def GeoJsonToXML(requestData):
     return countriesinXMLList
 
 
-# dic = ISSDBKey(timeValue='2020-06-05 14-25-04', key='longitude', value=b'1234')
-# ISSDBKey(timeValue='2020-06-05 14-25-04', key='latitude', value=b'1234'),
 # awaits list of longitude and latitude for "Position"
-def ISSPosJsonToXML(Positions):
+def ISSPosISSDBKeyToXML(Positions):
     elem = Element('Request')
     requestChild = Element('requestName')
     requestChild.text = 'ISSPos'
@@ -78,14 +75,25 @@ def ISSPosJsonToXML(Positions):
         positionChild = Element('isspos')
         timeChild = Element('time')
         timeChild.text = Positions[i].timeValue
-        latOrLongChild = Element(Positions[i].key)
-        latOrLongChild.text = Positions[i].value
-        latOrLongChild2 = Element(Positions[i + 1].key)
-        latOrLongChild2.text = Positions[i + 1].value
-        positionChild.append(timeChild,latOrLongChild,latOrLongChild2)
+        positionChild.append(timeChild)
+        if Positions[i].key == 'longitude':
+            longChild = Element(Positions[i].key)
+            longChild.text = Positions[i].value
+            latChild=Element(Positions[i+1].key)
+            latChild.text=Positions[i+1].value
+        else:
+            latChild = Element(Positions[i].key)
+            latChild.text = Positions[i].value
+            longChild = Element(Positions[i + 1].key)
+            longChild.text = Positions[i + 1].value
+        positionChild.append(longChild)
+        positionChild.append(latChild)
         dataChild.append(positionChild)
+    elem.append(requestChild)
+    elem.append(dataChild)
+    return tostring(elem)
 
-def JsonToXMLForCounties(requestData):
+def DicToXMLForCounties(requestData):
     elem = Element('Request')
     requestChild = Element('requestName')
     requestChild.text = 'GeoJson'
@@ -135,7 +143,7 @@ def JsonToXMLForCounties(requestData):
 # #for generating xmlForCounties.xml. After generating xmlForCounties should be moved to ISSTrackerFE>static>xml
 # file = open(r"../../../ISSTrackerBE/custom.geo_lowres.json")
 # data = json.load(file)
-# xml = JsonToXMLForCounties(processJson(data))
+# xml = DicToXMLForCounties(processJson(data))
 # xml = "<?xml version='1.0' encoding='UTF-8'?>" + str(xml, 'utf-8')
 # newFile = open(r"xmlForCounties.xml", "w+")
 # newFile.write(xml)
