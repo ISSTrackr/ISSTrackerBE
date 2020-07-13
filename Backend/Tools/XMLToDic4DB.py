@@ -3,7 +3,7 @@ import json
 
 
 # for only one country
-def parseXMLTODic(countryInXML):
+def GeoJsonXMLToDic(countryInXML):
     country = xmltodict.parse(countryInXML)
     country = json.dumps(country)
     country = json.loads(country)

@@ -3,6 +3,7 @@ from xml.etree.ElementTree import Element, ElementTree
 from xml.etree.ElementTree import tostring
 
 
+# preprocessing for parsing GeoJsons
 def processJson(data):
     countries = data['features']
     list = []
@@ -27,9 +28,9 @@ def processJson(data):
     return list
 
 
-def JsonToXML(requestData):
+def GeoJsonToXML(requestData):
     countryList = processJson(requestData)
-    countriesinXMLList=[]
+    countriesinXMLList = []
     for country in countryList:
         countryChild = Element('country')
         countryChild.attrib = {'countryname': country['countryname']}
@@ -64,6 +65,25 @@ def JsonToXML(requestData):
 
     return countriesinXMLList
 
+
+# dic = ISSDBKey(timeValue='2020-06-05 14-25-04', key='longitude', value=b'1234')
+# ISSDBKey(timeValue='2020-06-05 14-25-04', key='latitude', value=b'1234'),
+# awaits list of longitude and latitude for "Position"
+def ISSPosJsonToXML(Positions):
+    elem = Element('Request')
+    requestChild = Element('requestName')
+    requestChild.text = 'ISSPos'
+    dataChild = Element('data')
+    for i in range(0, len(Positions), 2):
+        positionChild = Element('isspos')
+        timeChild = Element('time')
+        timeChild.text = Positions[i].timeValue
+        latOrLongChild = Element(Positions[i].key)
+        latOrLongChild.text = Positions[i].value
+        latOrLongChild2 = Element(Positions[i + 1].key)
+        latOrLongChild2.text = Positions[i + 1].value
+        positionChild.append(timeChild,latOrLongChild,latOrLongChild2)
+        dataChild.append(positionChild)
 
 def JsonToXMLForCounties(requestData):
     elem = Element('Request')
@@ -112,8 +132,6 @@ def JsonToXMLForCounties(requestData):
     elem.append(dataChild)
     return tostring(elem)
 
-
-
 # #for generating xmlForCounties.xml. After generating xmlForCounties should be moved to ISSTrackerFE>static>xml
 # file = open(r"../../../ISSTrackerBE/custom.geo_lowres.json")
 # data = json.load(file)
@@ -122,4 +140,3 @@ def JsonToXMLForCounties(requestData):
 # newFile = open(r"xmlForCounties.xml", "w+")
 # newFile.write(xml)
 # file.close()
-
