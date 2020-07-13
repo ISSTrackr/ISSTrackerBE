@@ -9,7 +9,7 @@ def parseXMLTODic(countryInXML):
     country = json.loads(country)
     country = country['country']
     countryDic = {}
-    countryDic['countryname'] = country['@countryName']
+    countryDic['countryname'] = country['@countryname']
     for i in range(len(country['point'])):
         countryDic[i] = country['point'][i]
     return countryDic

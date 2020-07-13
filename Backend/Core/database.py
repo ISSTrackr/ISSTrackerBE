@@ -3,6 +3,7 @@ from os import getenv
 import time
 from Backend.Core.dataStructs import parseTimeToTimestamp, ISSDBKey, Astronaut
 from Backend.Requests import astrosOnISS
+from Backend.Tools.XMLToDic import parseXMLTODic
 from Backend.Tools import rssFeedTimeConverter as dateConverter
 
 
@@ -70,23 +71,10 @@ class redisDB:
 
     def _getGeoJsonSingel(self, countryname):
         with self.__redisDB__ as DB:
-            # initialize return dict
-            returnValue = {"countryname": countryname}
-
-            # generate search pattern
-            searchPattern = "GeoJson:" + countryname + ":*"
-
             # get keys
-            keys = DB.keys(searchPattern)
+            xml = DB.get("GeoJson:" + countryname)
 
-            # build return dict from DB
-            for i in range(len(keys) // 2):
-                startTime = time.time()
-                returnValue[str(i)] = {
-                    "latitude": DB.get(name="GeoJson:" + countryname + ":" + str(i) + ":latitude"),
-                    "longitude": DB.get(name="GeoJson:" + countryname + ":" + str(i) + ":longitude")
-                }
-                print("Got LAT & Long in: ", time.time() - startTime, " seconds")
+            returnValue = parseXMLTODic(xml)
             return returnValue
 
     def _getGeoJson(self, requestdata):
