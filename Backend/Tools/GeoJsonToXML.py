@@ -7,9 +7,9 @@ def processJson(data):
     countries = data['features']
     list = []
     for e in range(len(countries)):
-        countryName = data['features'][e]['properties']['sovereignt']
+        countryname = data['features'][e]['properties']['sovereignt']
         coordinates = data['features'][e]['geometry']['coordinates']
-        country = {'countryname': countryName}
+        country = {'countryname': countryname}
         if len(coordinates[0][0]) == 2:
             for i in range(len(coordinates[0])):
                 country[i] = {'longitude': coordinates[0][i][0], 'latitude': coordinates[0][i][1]}
@@ -28,8 +28,44 @@ def processJson(data):
 
 
 def JsonToXML(requestData):
-    # for requests for a single country only a single object is returned
+    countryList = processJson(requestData)
+    countriesinXMLList=[]
+    for country in countryList:
+        countryChild = Element('country')
+        countryChild.attrib = {'countryname': country['countryname']}
 
+        if "regions" in country:
+            for region in country["regions"]:
+                for coord in region:
+                    pointChild = Element("point")
+                    latChild = Element("latitude")
+                    latChild.text = str(region[coord]['latitude'])
+                    longChild = Element("longitude")
+                    longChild.text = str(region[coord]['longitude'])
+                    pointChild.append(longChild)
+                    pointChild.append(latChild)
+                    countryChild.append(pointChild)
+            countriesinXMLList.append(
+                {'countryname': country['countryname'], 'xml': tostring(countryChild).decode(encoding="utf-8")})
+        else:
+            for coord in country:
+                if coord == "countryname":
+                    continue;
+                pointChild = Element("point")
+                latChild = Element("latitude")
+                latChild.text = str(country[coord]['latitude'])
+                longChild = Element("longitude")
+                longChild.text = str(country[coord]['longitude'])
+                pointChild.append(longChild)
+                pointChild.append(latChild)
+                countryChild.append(pointChild)
+            countriesinXMLList.append(
+                {'countryname': country['countryname'], 'xml': tostring(countryChild).decode(encoding="utf-8")})
+
+    return countriesinXMLList
+
+
+def JsonToXMLForCounties(requestData):
     elem = Element('Request')
     requestChild = Element('requestName')
     requestChild.text = 'GeoJson'
@@ -77,10 +113,13 @@ def JsonToXML(requestData):
     return tostring(elem)
 
 
-file = open(r"../../../ISSTrackerBE/custom.geo_lowres.json")
-data = json.load(file)
-xml = JsonToXML(processJson(data))
-xml = "<?xml version='1.0' encoding='UTF-8'?>" + str(xml, 'utf-8')
-newFile = open(r"xmlForCounties.xml", "w+")
-newFile.write(xml)
-file.close()
+
+# #for generating xmlForCounties.xml. After generating xmlForCounties should be moved to ISSTrackerFE>static>xml
+# file = open(r"../../../ISSTrackerBE/custom.geo_lowres.json")
+# data = json.load(file)
+# xml = JsonToXMLForCounties(processJson(data))
+# xml = "<?xml version='1.0' encoding='UTF-8'?>" + str(xml, 'utf-8')
+# newFile = open(r"xmlForCounties.xml", "w+")
+# newFile.write(xml)
+# file.close()
+
