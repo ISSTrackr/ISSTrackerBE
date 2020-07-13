@@ -3,7 +3,7 @@ from os import getenv
 import time
 from Backend.Core.dataStructs import parseTimeToTimestamp, ISSDBKey, Astronaut
 from Backend.Requests import astrosOnISS
-from Backend.Tools.XMLToDic import parseXMLTODic
+from Backend.Tools.XMLToDic4DB import GeoJsonXMLToDic
 from Backend.Tools import rssFeedTimeConverter as dateConverter
 
 
@@ -17,6 +17,7 @@ class redisDB:
     def _setIsspos(self, data):
         # IssPos object (data):
         # {'latitude': -45.4742, 'longitude': 150.3883, 'timestamp': '2020-06-09 20-50-01'}
+
         with self.__redisDB__ as DB:
             # set Key and Value
             DB.set(name="ISSpos:" + data["timestamp"] + ":latitude", value=data["latitude"], ex=86400)
@@ -74,7 +75,7 @@ class redisDB:
             # get keys
             xml = DB.get("GeoJson:" + countryname)
 
-            returnValue = parseXMLTODic(xml)
+            returnValue = GeoJsonXMLToDic(xml)
             return returnValue
 
     def _getGeoJson(self, requestdata):
