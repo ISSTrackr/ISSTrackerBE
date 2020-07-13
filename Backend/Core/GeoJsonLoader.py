@@ -2,7 +2,7 @@ import json
 from time import sleep
 from os import getenv
 import redis
-from Backend.Tools.JsonToXML4DB import GeoJsonToXML
+from Backend.Tools.DicToXML4DB import GeoJsonToXML
 
 __redisHost__ = getenv('REDISHOST')  # "ISS-Trackr-API.redis.cache.windows.net"
 __redisPW__ = getenv('REDISPW')
