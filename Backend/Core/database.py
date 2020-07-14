@@ -3,7 +3,8 @@ from os import getenv
 import time
 from Backend.Core.dataStructs import parseTimeToTimestamp, ISSDBKey, Astronaut
 from Backend.Requests import astrosOnISS
-from Backend.Tools.XMLToDic4DB import GeoJsonXMLToDic
+from Backend.Tools.XMLToDic4DB import GeoJsonXMLToDic, ISSPosXMLToISSDBKey
+from Backend.Tools.DicToXML4DB import ISSPosISSDBKeyToXML
 from Backend.Tools import rssFeedTimeConverter as dateConverter
 
 
@@ -20,8 +21,15 @@ class redisDB:
 
         with self.__redisDB__ as DB:
             # set Key and Value
-            DB.set(name="ISSpos:" + data["timestamp"] + ":latitude", value=data["latitude"], ex=86400)
-            DB.set(name="ISSpos:" + data["timestamp"] + ":longitude", value=data["longitude"], ex=86400)
+            # get list of all ISSPositions
+            oldISSPositions = ISSPosXMLToISSDBKey(DB.get(name="ISSpos"))
+            # push current ISSpos into list of all ISSPositions
+            oldISSPositions.append(ISSDBKey(timeValue=data["timestamp"], key="longitude", value=data["longitude"]))
+            oldISSPositions.append(ISSDBKey(timeValue=data["timestamp"],key="latitude",value=data["latitude"]))
+            if time.localtime()-oldISSPositions[0].timestamp>'12h': #vergleiche timestamps
+                oldISSPositions.pop(0)
+            # push all ISSPositions including the new position into DB as XML
+            DB.set(name="ISSpos", value=ISSPosISSDBKeyToXML(oldISSPositions))
 
 
     def _getISS(self, requestData):
@@ -67,7 +75,7 @@ class redisDB:
 
             # get values from DB
             for key in keylist:
-                key.value = DB.get("ISSpos:" + key.timeValue + ":" + key.key)
+                key.value = DB.get("ISSpos:" + key.timeValue + ":" + key.key)   # todo
             return keylist
 
     def _getGeoJsonSingel(self, countryname):

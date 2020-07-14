@@ -16,13 +16,16 @@ def GeoJsonXMLToDic(countryInXML):
 
 
 def ISSPosXMLToISSDBKey(posXML):
-    positions = xmltodict.parse(posXML)
-    positions = json.dumps(positions)
-    positions = json.loads(positions)['Request']['data']['isspos']
-    DBkeys = []
-    for position in positions:
-        longitude = ISSDBKey(timeValue=position['time'], key='longitude', value=position['longitude'])
-        latitude = ISSDBKey(timeValue=position['time'], key='latitude', value=position['latitude'])
-        DBkeys.append(longitude)
-        DBkeys.append(latitude)
-    return DBkeys
+    if posXML == "":
+        return []
+    else:
+        positions = xmltodict.parse(posXML)
+        positions = json.dumps(positions)
+        positions = json.loads(positions)['Request']['data']['isspos']
+        DBkeys = []
+        for position in positions:
+            longitude = ISSDBKey(timeValue=position['time'], key='longitude', value=position['longitude'])
+            latitude = ISSDBKey(timeValue=position['time'], key='latitude', value=position['latitude'])
+            DBkeys.append(longitude)
+            DBkeys.append(latitude)
+        return DBkeys
