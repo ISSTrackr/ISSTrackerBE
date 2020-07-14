@@ -1,6 +1,7 @@
 import redis
 from os import getenv
 import time
+import datetime
 from Backend.Core.dataStructs import parseTimeToTimestamp, ISSDBKey, Astronaut
 from Backend.Requests import astrosOnISS
 from Backend.Tools.XMLToDic4DB import GeoJsonXMLToDic, ISSPosXMLToISSDBKey
@@ -22,15 +23,24 @@ class redisDB:
         with self.__redisDB__ as DB:
             # set Key and Value
             # get list of all ISSPositions
-            oldISSPositions = ISSPosXMLToISSDBKey(DB.get(name="ISSpos"))
+            try:
+                oldISSPositions = ISSPosXMLToISSDBKey(DB.get(name="ISSpos"))
+            except:
+                oldISSPositions = []
             # push current ISSpos into list of all ISSPositions
             oldISSPositions.append(ISSDBKey(timeValue=data["timestamp"], key="longitude", value=data["longitude"]))
-            oldISSPositions.append(ISSDBKey(timeValue=data["timestamp"],key="latitude",value=data["latitude"]))
-            if time.localtime()-oldISSPositions[0].timestamp>'12h': #vergleiche timestamps
-                oldISSPositions.pop(0)
+            oldISSPositions.append(ISSDBKey(timeValue=data["timestamp"], key="latitude", value=data["latitude"]))
+
+            issPositions = sorted(oldISSPositions, key=lambda x: x.timestamp)
+
+            if datetime.datetime.now().timestamp() - issPositions[0].timestamp > 43200:  # vergleiche timestamps
+                del issPositions[0]
+                del issPositions[1]
+
+            print(issPositions)
+
             # push all ISSPositions including the new position into DB as XML
             DB.set(name="ISSpos", value=ISSPosISSDBKeyToXML(oldISSPositions))
-
 
     def _getISS(self, requestData):
 
@@ -47,35 +57,30 @@ class redisDB:
             searchPattern = "ISSpos" + ":" + requestData["params"]["startTime"].split(" ")[0] + "*"
 
             # Get all keys from DB which match previously defined keyset
-            startTimeKeys = DB.keys(pattern=searchPattern)
+            Data = DB.get("ISSpos")
+            print(Data, "\n\n")
+
+            Data = ISSPosXMLToISSDBKey(Data)
 
             # add keys to keyset
-            for key in startTimeKeys:
-                splitted = str(key).split(':')
-
-                # create new ISSDBKey object which holds all values (timestamp for this key is automaticly converted)
-                currKeyObject = ISSDBKey(timeValue=splitted[1], key=splitted[2].strip("'"), value=None)
+            for key in Data:
 
                 # only add keys which are in the range of [startTime, endTime]
-                if currKeyObject.timestamp >= startTime and currKeyObject.timestamp <= endTime:
+                if key.timestamp >= startTime and key.timestamp <= endTime:
                     # adding key to keyset
-                    keyset.add(currKeyObject)
+                    keyset.add(key)
 
-            # same code as for startTime -> see comments above for explanations
-            searchPattern = "ISSpos" + ":" + requestData["params"]["endTime"].split(" ")[0] + "*"
-            endTimeKeys = DB.keys(pattern=searchPattern)
-            for key in endTimeKeys:
-                splitted = str(key).split(':')  # [0] = requestName; [1] = timestamp; [2] = param
-                currKeyObject = ISSDBKey(timeValue=splitted[1], key=splitted[2].strip("'"), value=None)
-                if currKeyObject.timestamp >= startTime and currKeyObject.timestamp <= endTime:
-                    keyset.add(currKeyObject)
+            # # same code as for startTime -> see comments above for explanations
+            # searchPattern = "ISSpos" + ":" + requestData["params"]["endTime"].split(" ")[0] + "*"
+            # endTimeKeys = DB.keys(pattern=searchPattern)
+            # for key in endTimeKeys:
+            #     splitted = str(key).split(':')  # [0] = requestName; [1] = timestamp; [2] = param
+            #     currKeyObject = ISSDBKey(timeValue=splitted[1], key=splitted[2].strip("'"), value=None)
+            #     if currKeyObject.timestamp >= startTime and currKeyObject.timestamp <= endTime:
+            #         keyset.add(currKeyObject)
 
             # convert keyset into a sorted list, sorted by timestamps
             keylist = sorted(keyset, key=lambda x: x.timestamp)
-
-            # get values from DB
-            for key in keylist:
-                key.value = DB.get("ISSpos:" + key.timeValue + ":" + key.key)   # todo
             return keylist
 
     def _getGeoJsonSingel(self, countryname):
@@ -107,10 +112,10 @@ class redisDB:
                 lastTime = startTime
                 for country in countryset:
                     returnValue.append(self._getGeoJsonSingel(countryname=country))
-                    print("Got Value in: ", time.time()-lastTime, " seconds")
+                    print("Got Value in: ", time.time() - lastTime, " seconds")
                     lastTime = time.time()
 
-                print("Done in: ", time.time()-startTime, " seconds")
+                print("Done in: ", time.time() - startTime, " seconds")
                 return returnValue
 
     def _getAstros(self, requestData):
@@ -118,7 +123,6 @@ class redisDB:
         astrosWithItems = []
         with self.__redisDB__ as DB:
             for i in range(len(astros)):
-
                 # get picture,flag and nation of current astro
                 picture = DB.get("Astronaut:" + astros[i] + ":" + 'picture')
                 flag = DB.get("Astronaut:" + astros[i] + ":" + 'flag')
@@ -149,20 +153,21 @@ class redisDB:
             # read publishing date out of key
             id = keyElements[1]
             # check if number of rssfeeds wished is not exceeded and this rssFeed published before the getRequest was done
-            if len(items) < (int(requestIds[1]) - int(requestIds[0])) and int(requestIds[0]) <= int(id) < int(requestIds[1]):
+            if len(items) < (int(requestIds[1]) - int(requestIds[0])) and int(requestIds[0]) <= int(id) < int(
+                    requestIds[1]):
                 idset.add(id)
 
         for ids in idset:
-            items.append({'title': self.__redisDB__.get("RSS-Feed:" + ids + ':title'), 'summary': self.__redisDB__.get("RSS-Feed:" + ids + ':summary'),
-                          'published': self.__redisDB__.get("RSS-Feed:" + ids + ':published'), 'link': self.__redisDB__.get("RSS-Feed:" + ids + ':link')})
+            items.append({'title': self.__redisDB__.get("RSS-Feed:" + ids + ':title'),
+                          'summary': self.__redisDB__.get("RSS-Feed:" + ids + ':summary'),
+                          'published': self.__redisDB__.get("RSS-Feed:" + ids + ':published'),
+                          'link': self.__redisDB__.get("RSS-Feed:" + ids + ':link')})
 
         items = sorted(items, key=lambda i: (i['published']), reverse=True)
         return items
 
-
     def getCountryList(self, requestData):
         with self.__redisDB__ as DB:
-
             # get all countrys from DB
             keys = DB.keys("GeoJson:*")
             countryset = set()
@@ -170,8 +175,6 @@ class redisDB:
                 countryset.add(str(keys[i]).split(":")[1])
 
             return countryset
-
-
 
     def setData(self, data, requestname):
         # switch case for requestnames -> call correct function for every request
@@ -191,11 +194,6 @@ class redisDB:
             "CountryList": self.getCountryList
         }
         return functions.get(requestName)(requestData)
-
-
-
-
-
 
 # Comment out for Debugging purposes
 # if __name__ == '__main__':

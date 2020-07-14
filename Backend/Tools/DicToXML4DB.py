@@ -2,6 +2,7 @@ import json
 from xml.etree.ElementTree import Element, ElementTree
 from xml.etree.ElementTree import tostring
 
+
 # preprocessing for parsing GeoJsons
 def processJson(data):
     countries = data['features']
@@ -78,20 +79,22 @@ def ISSPosISSDBKeyToXML(Positions):
         positionChild.append(timeChild)
         if Positions[i].key == 'longitude':
             longChild = Element(Positions[i].key)
-            longChild.text = Positions[i].value
-            latChild=Element(Positions[i+1].key)
-            latChild.text=Positions[i+1].value
+            longChild.text = str(Positions[i].value)
+            latChild = Element(Positions[i + 1].key)
+            latChild.text = str(Positions[i + 1].value)
         else:
             latChild = Element(Positions[i].key)
-            latChild.text = Positions[i].value
+            latChild.text = str(Positions[i].value)
             longChild = Element(Positions[i + 1].key)
-            longChild.text = Positions[i + 1].value
+            longChild.text = str(Positions[i + 1].value)
         positionChild.append(longChild)
         positionChild.append(latChild)
         dataChild.append(positionChild)
     elem.append(requestChild)
     elem.append(dataChild)
+
     return tostring(elem)
+
 
 def DicToXMLForCounties(requestData):
     elem = Element('Request')

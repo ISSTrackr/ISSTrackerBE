@@ -20,6 +20,7 @@ def ISSPosXMLToISSDBKey(posXML):
         return []
     else:
         positions = xmltodict.parse(posXML)
+        print(positions)
         positions = json.dumps(positions)
         positions = json.loads(positions)['Request']['data']['isspos']
         DBkeys = []
