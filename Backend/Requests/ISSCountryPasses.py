@@ -75,7 +75,6 @@ def ISScountryPasses(requestData):
                 returnValue["passes"][returnIndex]["endTime"] = issCoordinates[x].timeValue
             lastTimeValue = issCoordinates[x].timeValue
         lastPointOnPolygon = thisPointOnPolygon
-    print(returnValue)
     return returnValue
 
 # Uncomment for Debugging purposes

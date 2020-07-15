@@ -37,8 +37,6 @@ class redisDB:
                 del issPositions[0]
                 del issPositions[1]
 
-            print(issPositions)
-
             # push all ISSPositions including the new position into DB as XML
             DB.set(name="ISSpos", value=ISSPosISSDBKeyToXML(oldISSPositions))
 
@@ -58,7 +56,6 @@ class redisDB:
 
             # Get all keys from DB which match previously defined keyset
             Data = DB.get("ISSpos")
-            print(Data, "\n\n")
 
             Data = ISSPosXMLToISSDBKey(Data)
 

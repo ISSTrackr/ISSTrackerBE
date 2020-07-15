@@ -20,9 +20,10 @@ def ISSPosXMLToISSDBKey(posXML):
         return []
     else:
         positions = xmltodict.parse(posXML)
-        print(positions)
         positions = json.dumps(positions)
         positions = json.loads(positions)['Request']['data']['isspos']
+        if not isinstance(positions, list):
+            positions = [positions]
         DBkeys = []
         for position in positions:
             longitude = ISSDBKey(timeValue=position['time'], key='longitude', value=position['longitude'])
