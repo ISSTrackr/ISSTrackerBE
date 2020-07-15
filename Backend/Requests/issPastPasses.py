@@ -46,7 +46,7 @@ class pastPasses():
             "numberOfPasses": 0,
             "passes": []
         }
-        returnIndex = 0
+        returnIndex = -1
 
         for x in range(0, len(issCoordinates), 2):
             # reformat isscoordinates
