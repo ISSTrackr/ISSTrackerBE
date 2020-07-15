@@ -59,6 +59,7 @@ class pastPasses():
             if not lastPointInCircle and thisPointInCircle:
                 returnValue["passes"].append({"startTime": issCoordinates[x].timeValue, "endTime": ""})
                 returnValue["numberOfPasses"] += 1
+                returnIndex += 1
                 lastTimeValue = issCoordinates[x].timeValue
                 if len(issCoordinates) - 1 == x or len(issCoordinates) - 2 == x:
                     returnValue["passes"][returnIndex]["endTime"] = issCoordinates[x].timeValue
