@@ -38,7 +38,7 @@ class redisDB:
                 del issPositions[1]
 
             # push all ISSPositions including the new position into DB as XML
-            DB.set(name="ISSpos", value=ISSPosISSDBKeyToXML(oldISSPositions))
+            DB.set(name="ISSpos", value=ISSPosISSDBKeyToXML(issPositions))
 
     def _getISS(self, requestData):
 
