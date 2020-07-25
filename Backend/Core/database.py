@@ -35,7 +35,7 @@ class redisDB:
 
             if datetime.datetime.now().timestamp() - issPositions[0].timestamp > 43200:  # vergleiche timestamps
                 del issPositions[0]
-                del issPositions[1]
+                del issPositions[0]
 
             # push all ISSPositions including the new position into DB as XML
             DB.set(name="ISSpos", value=ISSPosISSDBKeyToXML(issPositions))
