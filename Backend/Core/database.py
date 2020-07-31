@@ -48,8 +48,10 @@ class redisDB:
                 del issPositions[0]
 
             for i in range(10):
-                XML = ISSPosISSDBKeyToXML(issPositions)
-
+                try:
+                    XML = ISSPosISSDBKeyToXML(issPositions)
+                except:
+                    XML = []
                 if XMLvalidate(
                         "<?xml version='1.0' encoding='UTF-8'?><!DOCTYPE Request SYSTEM \'./DTD/ISSposDB.dtd\'>" + str(
                                 XML, 'utf-8')):
