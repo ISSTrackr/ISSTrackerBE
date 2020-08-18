@@ -3,6 +3,7 @@ FROM python:3.8.5-alpine
 # Environment
 ENV REDISHOST="localhost"
 ENV REDISPW="password"
+ENV FLASK_APP="application.py"
 
 # Init
 WORKDIR /usr/src/app
@@ -15,4 +16,4 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # Finalize
-ENTRYPOINT [ "python", "application.py" ]
+ENTRYPOINT [ "flask", "run" ]
