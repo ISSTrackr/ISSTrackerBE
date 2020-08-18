@@ -14,6 +14,10 @@ from Backend.Core.checkThread import checkThread
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__, static_url_path='')
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
 cors = CORS(app)
 BadRequest = '<?xml version="1.0" encoding="UTF-8"?>' \
              '<message>' \
