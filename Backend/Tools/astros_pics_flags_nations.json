@@ -32,6 +32,27 @@
       "nation":"USA",
       "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
     
+},
+    {
+      "name":"Kathleen Rubins",
+      "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Kathleen_Rubins_portrait.jpg/800px-Kathleen_Rubins_portrait.jpg",
+      "nation":"USA",
+      "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
+    
+},
+              {
+      "name":"Sergey Kud-Sverchkov",
+      "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Jsc2020e032664.jpg/800px-Jsc2020e032664.jpg",
+      "nation":"Russia",
+      "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/255px-Flag_of_Russia.svg.png"
+    
+},
+              {
+      "name":"Sergey Ryzhikov",
+      "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Sergey_Ryzhikov_at_the_Gagarin_Cosmonaut_Training_Center_in_Star_City.jpg/800px-Sergey_Ryzhikov_at_the_Gagarin_Cosmonaut_Training_Center_in_Star_City.jpg",
+      "nation":"Russia",
+      "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/255px-Flag_of_Russia.svg.png"
+    
 }
   
 ]
