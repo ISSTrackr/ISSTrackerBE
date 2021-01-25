@@ -1,59 +1,76 @@
-{  "astros":[    {
-      "name":"Chris Cassidy",
-      "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/JohnCassidyv2.jpg/300px-JohnCassidyv2.jpg",
-      "nation":"USA",
-      "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
-    
-},
-    {
-      "name":"Anatoly Ivanishin",
-      "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Anatoli_Ivanishin_2011.jpg/300px-Anatoli_Ivanishin_2011.jpg",
-      "nation":"Russia",
-      "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/255px-Flag_of_Russia.svg.png"
-    
-},
-    {
-      "name":"Ivan Vagner",
-      "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Ivan_Vagner_%28Jsc2020e014992%29.jpg/330px-Ivan_Vagner_%28Jsc2020e014992%29.jpg",
-      "nation":"Russia",
-      "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/255px-Flag_of_Russia.svg.png"
-    
-},
-    {
-      "name":"Doug Hurley",
-      "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Douglas_Hurley.jpg/200px-Douglas_Hurley.jpg",
-      "nation":"USA",
-      "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
-    
-},
-    {
-      "name":"Bob Behnken",
-      "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Robert_L._Behnken_in_2018.jpg/800px-Robert_L._Behnken_in_2018.jpg",
-      "nation":"USA",
-      "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
-    
-},
-    {
-      "name":"Kathleen Rubins",
-      "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Kathleen_Rubins_portrait.jpg/800px-Kathleen_Rubins_portrait.jpg",
-      "nation":"USA",
-      "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
-    
-},
-              {
-      "name":"Sergey Kud-Sverchkov",
-      "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Jsc2020e032664.jpg/800px-Jsc2020e032664.jpg",
-      "nation":"Russia",
-      "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/255px-Flag_of_Russia.svg.png"
-    
-},
-              {
-      "name":"Sergey Ryzhikov",
-      "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Sergey_Ryzhikov_at_the_Gagarin_Cosmonaut_Training_Center_in_Star_City.jpg/800px-Sergey_Ryzhikov_at_the_Gagarin_Cosmonaut_Training_Center_in_Star_City.jpg",
-      "nation":"Russia",
-      "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/255px-Flag_of_Russia.svg.png"
-    
-}
-  
-]
-}
+{
+    "astros":[
+       {
+          "name":"Chris Cassidy",
+          "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/JohnCassidyv2.jpg/300px-JohnCassidyv2.jpg",
+          "nation":"USA",
+          "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
+       },
+       {
+          "name":"Anatoly Ivanishin",
+          "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Anatoli_Ivanishin_2011.jpg/300px-Anatoli_Ivanishin_2011.jpg",
+          "nation":"Russia",
+          "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/255px-Flag_of_Russia.svg.png"
+       },
+       {
+          "name":"Ivan Vagner",
+          "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Ivan_Vagner_%28Jsc2020e014992%29.jpg/330px-Ivan_Vagner_%28Jsc2020e014992%29.jpg",
+          "nation":"Russia",
+          "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/255px-Flag_of_Russia.svg.png"
+       },
+       {
+          "name":"Doug Hurley",
+          "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Douglas_Hurley.jpg/200px-Douglas_Hurley.jpg",
+          "nation":"USA",
+          "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
+       },
+       {
+          "name":"Bob Behnken",
+          "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Robert_L._Behnken_in_2018.jpg/800px-Robert_L._Behnken_in_2018.jpg",
+          "nation":"USA",
+          "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
+       },
+       {
+          "name":"Kathleen Rubins",
+          "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Kathleen_Rubins_portrait.jpg/800px-Kathleen_Rubins_portrait.jpg",
+          "nation":"USA",
+          "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
+       },
+       {
+          "name":"Sergey Kud-Sverchkov",
+          "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Jsc2020e032664.jpg/800px-Jsc2020e032664.jpg",
+          "nation":"Russia",
+          "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/255px-Flag_of_Russia.svg.png"
+       },
+       {
+          "name":"Sergey Ryzhikov",
+          "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Sergey_Ryzhikov_at_the_Gagarin_Cosmonaut_Training_Center_in_Star_City.jpg/800px-Sergey_Ryzhikov_at_the_Gagarin_Cosmonaut_Training_Center_in_Star_City.jpg",
+          "nation":"Russia",
+          "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/255px-Flag_of_Russia.svg.png"
+       },
+       {
+        "name":"Shannon Walker",
+        "picture":"https://upload.wikimedia.org/wikipedia/commons/8/8d/ShannonWalker.jpg",
+        "nation":"USA",
+        "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
+     },
+     {
+        "name":"Victor Glover",
+        "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Victor_Glover_official_portrait_2020.jpg/800px-Victor_Glover_official_portrait_2020.jpg",
+        "nation":"USA",
+        "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
+     },
+     {
+        "name":"Mike Hopkins",
+        "picture":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Mike_Hopkins_official_portrait_2020.jpg/800px-Mike_Hopkins_official_portrait_2020.jpg",
+        "nation":"USA",
+        "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/220px-Flag_of_the_United_States.svg.png"
+     },
+     {
+        "name":"Soichi Noguchi",
+        "picture":"https://upload.wikimedia.org/wikipedia/commons/3/32/Soichi_noguchi_v2.jpg",
+        "nation":"Japan",
+        "flag":"https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png"
+     }
+    ]
+ }
