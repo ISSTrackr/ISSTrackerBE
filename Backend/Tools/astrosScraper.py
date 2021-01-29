@@ -2,11 +2,11 @@ import json
 import requests
 from Backend.Requests import astrosOnISS
 from Backend.Tools.AstrosJsonLoader import process
-
+import os
 def getAstroObject(name):
     # get image url
     headers = {
-        "apikey": "hereWriteAPIKey"}
+        "apikey": os.environ['apiKey']}
 
     params = (
         ("q", name),
