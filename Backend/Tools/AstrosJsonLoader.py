@@ -1,11 +1,11 @@
 import json
-
+import os
 import redis
 
 
 def process(data):
-    __redisHost__ = ""
-    __redisDB__ = redis.Redis(host=__redisHost__, port=6379, db=0, password="")
+    __redisHost__ = os.environ['redisHost']
+    __redisDB__ = redis.Redis(host=__redisHost__, port=6379, db=0, password=os.environ['redisPassword'])
     astros = data['astros']
     for i in range(len(astros)):
         __redisDB__.set(name="Astronaut:" + astros[i]['name'] + ":picture", value=astros[i]['picture'])
