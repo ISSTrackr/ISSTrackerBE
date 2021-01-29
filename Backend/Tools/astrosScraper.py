@@ -68,4 +68,4 @@ if newAstroDetected:
     file.close()
     file = open(r"astros_pics_flags_nations.json")
     data = json.load(file)
-    process()
+    process(data)
